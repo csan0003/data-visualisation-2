@@ -1,183 +1,57 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Decadal Deaths Disasters Types (1900 - 2010)",
-  "width": 1000,
-  "height": 500,
-  "autosize": "none",
-
-  "signals": [
-    { "name": "tx", "update": "width / 2" },
-    { "name": "ty", "update": "height / 2" },
-    {
-      "name": "scale",
-      "value": 150,
-      "on": [{
-        "events": {"type": "wheel", "consume": true},
-        "update": "clamp(scale * pow(1.0005, -event.deltaY * pow(16, event.deltaMode)), 150, 3000)"
-      }]
-    },
-    {
-      "name": "angles",
-      "value": [0, 0],
-      "on": [{
-        "events": "mousedown",
-        "update": "[rotateX, centerY]"
-      }]
-    },
-    {
-      "name": "cloned",
-      "value": null,
-      "on": [{
-        "events": "mousedown",
-        "update": "copy('projection')"
-      }]
-    },
-    {
-      "name": "start",
-      "value": null,
-      "on": [{
-        "events": "mousedown",
-        "update": "invert(cloned, xy())"
-      }]
-    },
-    {
-      "name": "drag", "value": null,
-      "on": [{
-        "events": "[mousedown, window:mouseup] > window:mousemove",
-        "update": "invert(cloned, xy())"
-      }]
-    },
-    {
-      "name": "delta", "value": null,
-      "on": [{
-        "events": {"signal": "drag"},
-        "update": "[drag[0] - start[0], start[1] - drag[1]]"
-      }]
-    },
-    {
-      "name": "rotateX", "value": 0,
-      "on": [{
-        "events": {"signal": "delta"},
-        "update": "angles[0] + delta[0]"
-      }]
-    },
-    {
-      "name": "centerY", "value": 0,
-      "on": [{
-        "events": {"signal": "delta"},
-        "update": "clamp(angles[1] + delta[1], -60, 60)"
-      }]
-    }
-  ],
-
+  "description": "A bar chart with highlighting on hover and selecting on click. (Inspired by Tableau's interaction style.)",
+  "width": 1100,
+  "height": 400,
+  "data": {
+    "values": [
+      {"Global Disaster Losses in GDP Share per 5 years": "1990", "Disaster losses as % of Global GDP": 0.24},
+      {"Global Disaster Losses in GDP Share per 5 years": "1995", "Disaster losses as % of Global GDP": 0.45}, 
+      {"Global Disaster Losses in GDP Share per 5 years": "2000", "Disaster losses as % of Global GDP": 0.15}, 
+      {"Global Disaster Losses in GDP Share per 5 years": "2005", "Disaster losses as % of Global GDP": 0.5},
+      {"Global Disaster Losses in GDP Share per 5 years": "2010", "Disaster losses as % of Global GDP": 0.25},
+      {"Global Disaster Losses in GDP Share per 5 years": "2015", "Disaster losses as % of Global GDP": 0.14}
+    ]
+  },
   "params": [
     {
-      "name": "Year_selection",
-      "value": 1992,
-      "bind": {
-        "input": "range",
-        "min": 1900,
-        "max": 2010,
-        "step": 1,
-        "name": "Year:  "
-      }
+      "name": "highlight",
+      "select": {"type": "point", "on": "mouseover"}
     },
-    {
-      "name": "zoom_level",
-      "value": 130,
-      "bind": {
-        "input": "range",
-        "min": 30,
-        "max": 500,
-        "step": 100,
-        "name": "Zoom: "
-      }
-    },
-    {
-      "name": "center_to",
-      "value": [8.0, 19.50],
-      "bind": {
-        "input": "select",
-        "options": [
-          [-101.1, 46.4],
-          [23.0, -80.0],
-          [5.5, 20.0],
-          [98.5, 33.8]
-        ],
-        "labels": ["North America", "Antarctica", "Africa", "Asia"],
-        "name": "Map Centre: "
-      }
-    }
+    {"name": "select", "select": "point"}
   ],
-  "projection": {
-    "type": "equirectangular",
-    "center": {"expr": "center_to"},
-    "scale": {"expr": "zoom_level"}
+  "mark": {
+    "type": "bar",
+    "fill": "#18416d",
+    "stroke": "black",
+    "cursor": "pointer"
   },
-  "layer": [
-    
-    {
-      "data": {
-        "url": "https://raw.githubusercontent.com/csan0003/week10-homework/main/js/ne_50m_admin_0_countries.topojson",
-        "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}
-      },
-      "transform": [
+  "encoding": {
+    "x": {"field": "Global Disaster Losses in GDP Share per 5 years", "type": "ordinal"},
+    "y": {"field": "Disaster losses as % of Global GDP", "type": "quantitative"},
+    "fillOpacity": {
+      "condition": {"param": "select", "value": 1},
+      "value": 0.3
+    },
+    "strokeWidth": {
+      "condition": [
         {
-          "calculate": "'Data is not available in ' + datum.properties.NAME",
-          "as": "note"
+          "param": "select",
+          "empty": false,
+          "value": 2
+        },
+        {
+          "param": "highlight",
+          "empty": false,
+          "value": 1
         }
       ],
-      "mark": {
-        "type": "geoshape",
-        "fill": "#5f0707",
-        "stroke": "white",
-        "strokeWidth": 1
-      },
-      "encoding": {"tooltip": {"field": "note"}}
-    },
-    {
-      "data": {
-        "url": "https://raw.githubusercontent.com/csan0003/week10-homework/main/data/decadal-deaths-disasters-type-new.csv"
-      },
-      "transform": [
-        {
-          "lookup": "country",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/csan0003/week10-homework/main/js/ne_50m_admin_0_countries.topojson",
-              "format": {
-                "type": "topojson",
-                "feature": "ne_50m_admin_0_countries"
-              }
-            },
-            "key": "properties.NAME"
-          },
-          "as": "geo"
-        },
-        {"filter": "datum.year == Year_selection"}
-      ],
-      "mark": {"type": "geoshape", "stroke": "#fff", "strokeWidth": 0.5},
-      "encoding": {
-        "shape": {"field": "geo", "type": "geojson"},
-        "color": {
-          "field": "flood",
-          "type": "quantitative",
-          "scale": {"domain": [400000, 1800000], "scheme": "reds"},
-          "legend": {"format": ".2s"}
-        },
-        "tooltip": [
-          {"field": "country", "type": "nominal", "title": "Country"},
-          {
-            "field": "year",
-            "type": "quantitative",
-            "title": "Median Price",
-            "format": ","
-          },
-          {"field": "year", "type": "quantitative", "title": "Year"}
-        ]
-      }
+      "value": 0
     }
-  ],
-  
-  "config": {}
+  },
+  "config": {
+    "scale": {
+      "bandPaddingInner": 0.2
+    }
+  }
 }
