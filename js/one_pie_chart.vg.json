@@ -1,20 +1,27 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Pie Chart with percentage_tooltip",
+  "description": "Number of Average Deaths from Natural Disasters in 2010 ",
+  "width": 900,
+  "height": 400,
   "data": {
     "values": [
-      {"category": 1, "value": 4},
-      {"category": 2, "value": 6},
-      {"category": 3, "value": 10},
-      {"category": 4, "value": 3},
-      {"category": 5, "value": 7},
-      {"category": 6, "value": 8}
+      {"Disaster": "Drought", "Number of Deaths": 2012},
+      {"Disaster": "Earthquacks", "Number of Deaths":26748},
+      {"Disaster": "Other Disasters", "Number of Deaths": 45260},
+      {"Disaster": "Volcanic Eruptions", "Number of Deaths": 136},
+      {"Disaster": "Floods", "Number of Deaths": 5067},
+      {"Disaster": "Mass Movements", "Number of Deaths": 10},
+      {"Disaster": "Storms", "Number of Deaths": 2763},
+      {"Disaster": "Landslides", "Number of Deaths": 1010},
+      {"Disaster": "Fog", "Number of Deaths": 0},
+      {"Disaster": "Wild Fires", "Number of Deaths": 88.10},
+      {"Disaster": "Extreme  Temperatures", "Number of Deaths": 7424}
     ]
   },
   "mark": {"type": "arc", "tooltip": true},
   "encoding": {
-    "theta": {"field": "value", "type": "quantitative", "stack": "normalize"},
-    "color": {"field": "category", "type": "nominal"}
+    "theta": {"field": "Number of Deaths", "type": "quantitative", "stack": "normalize"},
+    "color": {"field": "Disaster", "type": "nominal"}
   }
 }
   
