@@ -7,3 +7,12 @@
 	width: 800px;
 }
 
+
+#two_choropleth_map {
+	top:100px;
+	bottom: 100px; 
+	left: 1000px;
+	right: 500px;
+	height: 1000px;
+	width: 800px;
+}
