@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A bar chart with highlighting on hover and selecting on click. (Inspired by Tableau's interaction style.)",
+  "width": 1300,
+  "height": 400,
+  "background": "rgb(53, 88, 104)",
+  "data": {
+    "values": [
+      {"Global Disaster Losses in GDP Share per 5 years": "1990", "Disaster losses as % of Global GDP": 0.24},
+      {"Global Disaster Losses in GDP Share per 5 years": "1995", "Disaster losses as % of Global GDP": 0.45}, 
+      {"Global Disaster Losses in GDP Share per 5 years": "2000", "Disaster losses as % of Global GDP": 0.15}, 
+      {"Global Disaster Losses in GDP Share per 5 years": "2005", "Disaster losses as % of Global GDP": 0.5},
+      {"Global Disaster Losses in GDP Share per 5 years": "2010", "Disaster losses as % of Global GDP": 0.25},
+      {"Global Disaster Losses in GDP Share per 5 years": "2015", "Disaster losses as % of Global GDP": 0.14}
+    ]
+  },
+  "params": [
+    {
+      "name": "highlight",
+      "select": {"type": "point", "on": "mouseover"}
+    },
+    {"name": "select", "select": "point"}
+  ],
+  "mark": {
+    "type": "bar",
+    "fill": "#e3effd",
+    "stroke": "black",
+    "cursor": "pointer"
+  },
+  "encoding": {
+    "x": {"field": "Global Disaster Losses in GDP Share per 5 years", "type": "ordinal", "axis":{"labelColor": "white", "labelAngle": 0, "labelFontSize":12}},
+    "y": {"field": "Disaster losses as % of Global GDP", "type": "quantitative", "axis":{"labelColor": "white", "labelAngle": 0, "labelFontSize":12}},
+    
+    "fillOpacity": {
+      "condition": {"param": "select", "value": 1},
+      "value": 0.3
+    },
+    "strokeWidth": {
+      "condition": [
+        {
+          "param": "select",
+          "empty": false,
+          "value": 2
+        },
+        {
+          "param": "highlight",
+          "empty": false,
+          "value": 1
+        }
+      ],
+      "value": 0
+    }
+  },
+  "config": {
+    "scale": {
+      "bandPaddingInner": 0.2
+    }
+  }
+
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1300,
+  "height": 500,
+  "data": {
+    "values": [
+      {"Country":"Australia", "Year": "2018", "Economic Loss":0.000142},
+      {"Country":"Australia", "Year": "2019", "Economic Loss":0.000123},
+      {"Country":"Australia", "Year": "2020", "Economic Loss":0.000123},
+      {"Country":"Japan", "Year": "2018", "Economic Loss":0.00071},
+      {"Country":"Japan", "Year": "2019", "Economic Loss":0.001562},
+      {"Country":"Japan", "Year": "2020", "Economic Loss":0.000958},
+      {"Country":"Sweden", "Year": "2018", "Economic Loss":0},
+      {"Country":"Sweden", "Year": "2019", "Economic Loss":0.001288},
+      {"Country":"Switzerland", "Year": "2018", "Economic Loss":0.001701},
+      {"Country":"Switzerland", "Year": "2019", "Economic Loss":0.001729},
+      {"Country":"Switzerland", "Year": "2020", "Economic Loss":0.001492},
+      {"Country":"United States", "Year": "2018", "Economic Loss":0.003214},
+      {"Country":"United States", "Year": "2019", "Economic Loss":0.002154},
+      {"Country":"United States", "Year": "2020", "Economic Loss":0.001105}
+      
+     
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "Country", "axis":{ "labelAngle": 0, "labelFontSize":12 }},
+    "y": {"field": "Economic Loss", "type": "quantitative", "axis":{ "labelAngle": 0, "labelFontSize":12 }},
+    "xOffset": {"field": "Year"},
+    "color": {"field": "Year"}
+  }
+}
