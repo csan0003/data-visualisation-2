@@ -1,18 +1,26 @@
 #one_pie_chart {
-	top:100px;
-	bottom: 100px; 
-	left: 1000px;
-	right: 500px;
-	height: 1000px;
-	width: 800px;
-}
 
+}
 
 #two_choropleth_map {
-	top:100px;
-	bottom: 100px; 
-	left: 1000px;
-	right: 500px;
-	height: 1000px;
-	width: 800px;
 }
+
+#three_bar_chart {
+	margin-left: 10px;
+	
+
+}
+
+#four_map_two {
+
+
+}
+
+.two_graphs {
+	display: block;
+	width: 800px; 
+	margin: 0 auto; 
+	}
+
+
+
